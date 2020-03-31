@@ -3,6 +3,11 @@
   "version": "0.5.2",
   "private": true,
   "description": "DPoP for the browser",
+  "keywords": [
+    "browser",
+    "dpop",
+    "oauth"
+  ],
   "homepage": "https://github.com/panva/dpop.js",
   "repository": "panva/dpop.js",
   "funding": "https://github.com/sponsors/panva",
