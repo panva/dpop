@@ -1,6 +1,6 @@
 {
   "name": "dpop",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": true,
   "description": "DPoP for the browser",
   "homepage": "https://github.com/panva/dpop.js",
