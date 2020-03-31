@@ -8,8 +8,8 @@
     "dpop",
     "oauth"
   ],
-  "homepage": "https://github.com/panva/dpop.js",
-  "repository": "panva/dpop.js",
+  "homepage": "https://github.com/panva/dpop",
+  "repository": "panva/dpop",
   "funding": "https://github.com/sponsors/panva",
   "license": "MIT",
   "author": "Filip Skokan <panva.ip@gmail.com>",
