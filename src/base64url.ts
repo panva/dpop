@@ -1,4 +1,4 @@
-function encode(input: Uint8Array) {
+function encode (input: Uint8Array) {
   const base64string = btoa(String.fromCharCode.apply(0, input))
   return base64string.replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_')
 }

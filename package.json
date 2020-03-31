@@ -29,7 +29,12 @@
         "@pika/plugin-build-web"
       ],
       [
-        "./build/minify"
+        "./build/minify",
+        {
+          "terserOptions": {
+            "toplevel": true
+          }
+        }
       ],
       [
         "pika-plugin-package.json",

@@ -9,7 +9,7 @@ const minifyOptions = {
   }
 }
 
-module.exports.build = async function build ({ cwd, out, options, reporter }) {
+module.exports.build = async function build ({ out, options }) {
   const terserOptions = Object.assign({}, minifyOptions, (options.terserOptions || {}))
   const dir = 'dist-web'
   const indexPath = path.join(path.join(out, dir, 'index.js'))

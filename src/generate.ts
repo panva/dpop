@@ -1,19 +1,15 @@
-import * as algs from './algs'
+import alg from './algs'
 
-async function generateKeyPair (alg: string) {
-  if (!algs[alg]) {
-    throw new TypeError('unrecognized or unsupported JWS algorithm')
-  }
-
+async function generateKeyPair (jwsAlgorithm: string) {
   let algorithm: RsaHashedKeyGenParams | EcKeyGenParams
-  if (!alg.startsWith('ES')) {
+  if (!jwsAlgorithm.startsWith('ES')) {
     algorithm = {
       modulusLength: 2048,
       publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
-      ...algs[alg]
+      ...alg(jwsAlgorithm)
     }
   } else {
-    algorithm = algs[alg]
+    algorithm = alg(jwsAlgorithm)
   }
 
   return crypto.subtle.generateKey(algorithm, false, ['sign'])

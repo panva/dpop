@@ -5,11 +5,10 @@ const iat = () => Date.now() / 1000 | 0
 
 async function toJWK(publicKey: CryptoKey) {
   const { alg, ext, key_ops, ...jwk } = await crypto.subtle.exportKey('jwk', publicKey)
-
   return jwk
 }
 
-async function DPoP(keypair: CryptoKeyPair, alg: string, uri: string, method: string, additional?: object) {
+export default async (keypair: CryptoKeyPair, alg: string, uri: string, method: string, additional?: object) => {
   if (typeof keypair !== 'object' || !keypair) {
     throw new TypeError('"keypair" argument must be an object')
   }
@@ -32,5 +31,3 @@ async function DPoP(keypair: CryptoKeyPair, alg: string, uri: string, method: st
     { ...additional, iat: iat(), jti: jti(), htu: uri, htm: method }
   )
 }
-
-export default DPoP

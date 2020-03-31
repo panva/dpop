@@ -1,6 +1,6 @@
 const charset = '_-0123456789aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ'
 
-function jti () {
+export default () => {
   let size = 21
   var id = ''
   var bytes = crypto.getRandomValues(new Uint8Array(size))
@@ -9,5 +9,3 @@ function jti () {
   }
   return id
 }
-
-export default jti
