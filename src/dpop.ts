@@ -1,17 +1,15 @@
-/* eslint-env browser */
-
-import JWT from './jwt.mjs'
-import jti from './jti.mjs'
+import JWT from './jwt'
+import jti from './jti'
 
 const iat = () => Date.now() / 1000 | 0
 
-async function toJWK (publicKey) {
-  const { alg, ext, key_ops, ...jwk } = await crypto.subtle.exportKey('jwk', publicKey) // eslint-disable-line camelcase
+async function toJWK(publicKey: CryptoKey) {
+  const { alg, ext, key_ops, ...jwk } = await crypto.subtle.exportKey('jwk', publicKey)
 
   return jwk
 }
 
-async function DPoP (keypair, alg, uri, method, additional) {
+async function DPoP(keypair: CryptoKeyPair, alg: string, uri: string, method: string, additional?: object) {
   if (typeof keypair !== 'object' || !keypair) {
     throw new TypeError('"keypair" argument must be an object')
   }

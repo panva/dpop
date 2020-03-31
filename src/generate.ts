@@ -1,23 +1,22 @@
-/* eslint-env browser */
+import * as algs from './algs'
 
-import * as algs from './algs.mjs'
-
-async function generateKeyPair (alg) {
+async function generateKeyPair (alg: string) {
   if (!algs[alg]) {
     throw new TypeError('unrecognized or unsupported JWS algorithm')
   }
 
+  let algorithm: RsaHashedKeyGenParams | EcKeyGenParams
   if (!alg.startsWith('ES')) {
-    alg = {
+    algorithm = {
       modulusLength: 2048,
       publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
       ...algs[alg]
     }
   } else {
-    alg = algs[alg]
+    algorithm = algs[alg]
   }
 
-  return crypto.subtle.generateKey(alg, false, ['sign'])
+  return crypto.subtle.generateKey(algorithm, false, ['sign'])
 }
 
 export default generateKeyPair

@@ -1,18 +1,52 @@
 {
   "name": "dpop",
   "version": "0.4.0",
+  "private": true,
   "description": "DPoP for the browser",
   "homepage": "https://github.com/panva/dpop.js",
   "repository": "panva/dpop.js",
   "funding": "https://github.com/sponsors/panva",
   "license": "MIT",
   "author": "Filip Skokan <panva.ip@gmail.com>",
-  "files": [
-    "lib"
-  ],
-  "main": "lib/index.mjs",
   "type": "module",
+  "scripts": {
+    "build": "pika build"
+  },
   "devDependencies": {
-    "standard": "^14.3.1"
+    "@pika/pack": "^0.5.0",
+    "@pika/plugin-build-web": "^0.9.2",
+    "@pika/plugin-ts-standard-pkg": "^0.9.2",
+    "pika-plugin-package.json": "^1.0.2",
+    "terser": "^4.6.9",
+    "typescript": "^3.8.3"
+  },
+  "@pika/pack": {
+    "pipeline": [
+      [
+        "@pika/plugin-ts-standard-pkg"
+      ],
+      [
+        "@pika/plugin-build-web"
+      ],
+      [
+        "./build/minify"
+      ],
+      [
+        "pika-plugin-package.json",
+        {
+          "*files": [
+            "-bin/"
+          ],
+          "+author": "^",
+          "+funding": "^",
+          "+type": "^",
+          "+main": "dist-src/index.js",
+          "browser": "dist-web/index.min.js",
+          "-devDependencies": {},
+          "-dependencies": {},
+          "-private": {}
+        }
+      ]
+    ]
   }
 }

@@ -19,7 +19,7 @@ Supports the following JWS algorithms: PS256, PS384, PS512, RS256, RS384, RS512,
   </head>
 
   <script type="module">
-    import DPoP, { generateKeyPair } from './lib/index.mjs'
+    import DPoP, { generateKeyPair } from 'https://cdn.jsdelivr.net/npm/dpop@^0.5.0'
 
     (async () => {
       const alg = 'ES256'
