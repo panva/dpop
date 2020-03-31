@@ -20,17 +20,6 @@ async function JWT (privateKey: CryptoKey, header: { alg: string, [key: string]:
     base64url.encode(utf8ToUint8Array(p))
   ].join('.')
 
-  const characters = p.split('')
-  const it = utf8ToUint8Array(p).entries()
-  let i = 0
-  const result = []
-
-  let current
-  while (!(current = it.next()).done) {
-    result.push([current.value[1], characters[i]])
-    i++
-  }
-
   const messageAsUint8Array = utf8ToUint8Array(partialToken)
   const signature = await crypto.subtle.sign(alg, privateKey, messageAsUint8Array)
   const signatureAsBase64 = base64url.encode(new Uint8Array(signature))
