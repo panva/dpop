@@ -1,7 +1,7 @@
 # DPoP
 
 > Browser-focused implementation of
-[OAuth 2.0 Demonstration of Proof-of-Possession at the Application Layer - draft-fett-oauth-dpop-04](https://tools.ietf.org/html/draft-fett-oauth-dpop-04).
+[OAuth 2.0 Demonstration of Proof-of-Possession at the Application Layer - draft-ietf-oauth-dpop-00](https://tools.ietf.org/html/draft-ietf-oauth-dpop-00).
 
 ## Usage
 
