@@ -10,23 +10,33 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
+    <title>it's dpop time!</title>
+    <script type="module">
+      import DPoP, { generateKeyPair } from 'https://cdn.jsdelivr.net/npm/dpop@^0.5.0';
+
+      const alg = 'ES256'; // see below for other supported JWS algorithms
+
+      (async () => {
+        const keypair = await generateKeyPair(alg);
+        const dpopProofJWT = await DPoP(keypair, alg, 'https://rs.example.com/resource', 'GET');
+      })();
+    </script>
   </head>
-
-  <script type="module">
-    import DPoP, { generateKeyPair } from 'https://cdn.jsdelivr.net/npm/dpop@^0.5.0'
-
-    const alg = 'ES256' // see below for other supported JWS algorithms
-
-    (async () => {
-      const keypair = await generateKeyPair(alg)
-      const dpopProofJWT = await DPoP(keypair, alg, 'https://rs.example.com/resource', 'GET')
-    })()
-  </script>
 </html>
 ```
 
 _Note:_ Storage of the crypto key pair is not included, use your existing abstraction over IndexedDB
 to store the CryptoKey instances.
+
+## API
+
+### default module export
+
+> function DPoP(keypair: [CryptoKeyPair](https://developer.mozilla.org/en-US/docs/Web/API/CryptoKeyPair), alg: string, htu: string, htm: string, additional?: object) => Promise<string>;
+
+### generateKeyPair named export
+
+> function generateKeyPair(alg: string): Promise<[CryptoKeyPair](https://developer.mozilla.org/en-US/docs/Web/API/CryptoKeyPair)>
 
 
 ## Supported JWS Algorithms
