@@ -32,11 +32,11 @@ to store the CryptoKey instances.
 
 ### default module export
 
-> function DPoP(keypair: [CryptoKeyPair](https://developer.mozilla.org/en-US/docs/Web/API/CryptoKeyPair), alg: string, htu: string, htm: string, additional?: object) => Promise<string>;
+> function DPoP(keypair: [CryptoKeyPair](https://developer.mozilla.org/en-US/docs/Web/API/CryptoKeyPair), alg: string, htu: string, htm: string, additional?: object) => Promise&lt;string&gt;;
 
 ### generateKeyPair named export
 
-> function generateKeyPair(alg: string): Promise<[CryptoKeyPair](https://developer.mozilla.org/en-US/docs/Web/API/CryptoKeyPair)>
+> function generateKeyPair(alg: string): Promise&lt;[CryptoKeyPair](https://developer.mozilla.org/en-US/docs/Web/API/CryptoKeyPair)&gt;
 
 
 ## Supported JWS Algorithms
