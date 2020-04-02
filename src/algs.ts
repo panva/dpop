@@ -1,5 +1,6 @@
-const ps = (hash: number) => ({ name: 'RSA-PSS', hash: { name: `SHA-${hash}` }, saltLength: hash / 8 })
-const rs = (hash: number) => ({ name: 'RSASSA-PKCS1-V1_5', hash: { name: `SHA-${hash}` } })
+const rsa = (rest: object) => ({ modulusLength: 2048, publicExponent: new Uint8Array([0x01, 0x00, 0x01]), ...rest })
+const ps = (hash: number) => rsa({ name: 'RSA-PSS', hash: { name: `SHA-${hash}` }, saltLength: hash / 8 })
+const rs = (hash: number) => rsa({ name: 'RSASSA-PKCS1-V1_5', hash: { name: `SHA-${hash}` } })
 const es = (hash: number, namedCurve: string) => ({ name: 'ECDSA', namedCurve, hash: { name: `SHA-${hash}` } })
 
 const algs = {
