@@ -1,6 +1,19 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+## [0.6.0](https://github.com/panva/dpop/compare/v0.5.5...v0.6.0) (2021-04-08)
+
+
+### ⚠ BREAKING CHANGES
+
+* function signature changed to
+function DPoP(keypair: [CryptoKeyPair](https://developer.mozilla.org/en-US/docs/Web/API/CryptoKeyPair), alg: string, htu: string, htm: string, accessToken?: string, additional?: object) => Promise<string>;
+to accommodate for the optional resource access `ath` (hash of the access token) claim.
+
+### Features
+
+* update to draft-03 ([78680b5](https://github.com/panva/dpop/commit/78680b5bc33cf5341b81b27fc98be52a7b74480c))
 
 ## [0.5.5](https://github.com/panva/dpop/compare/v0.5.4...v0.5.5) (2020-04-02)
 
