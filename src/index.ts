@@ -1,4 +1,4 @@
-import DPoP from './dpop'
-import generateKeyPair from './generate'
+import DPoP from "./dpop";
+import generateKeyPair from "./generate";
 
-export { DPoP as default, generateKeyPair }
+export { DPoP as default, generateKeyPair };

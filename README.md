@@ -1,7 +1,7 @@
 # DPoP
 
 > Browser-focused implementation of
-[OAuth 2.0 Demonstration of Proof-of-Possession at the Application Layer - draft-ietf-oauth-dpop-01](https://tools.ietf.org/html/draft-ietf-oauth-dpop-01).
+[OAuth 2.0 Demonstration of Proof-of-Possession at the Application Layer - draft-ietf-oauth-dpop-03](https://tools.ietf.org/html/draft-ietf-oauth-dpop-03).
 
 ## Usage
 
@@ -12,13 +12,19 @@
     <meta charset="utf-8">
     <title>it's dpop time!</title>
     <script type="module">
-      import DPoP, { generateKeyPair } from 'https://cdn.jsdelivr.net/npm/dpop@^0.5.0';
+      import DPoP, { generateKeyPair } from 'https://cdn.jsdelivr.net/npm/dpop@^0.6.0';
 
       const alg = 'ES256'; // see below for other supported JWS algorithms
-
+      
       (async () => {
         const keypair = await generateKeyPair(alg);
-        const dpopProofJWT = await DPoP(keypair, alg, 'https://rs.example.com/resource', 'GET');
+        
+        // Access Token Request
+        const accessTokenRequestProof = await DPoP(keypair, alg, 'https://op.example.com/token', 'POST');
+
+        // Protected Resource Access
+        const accessTokenValue = 'W0lFSOAgL4oxWwnFtigwmXtL3tHNDjUCXVRasB3hQWahsVvDb0YX1Q2fk7rMJ-oy';
+        const protectedResourceAccessProof = await DPoP(keypair, alg, 'https://rs.example.com/resource', 'GET', accessTokenValue);
       })();
     </script>
   </head>
@@ -32,7 +38,7 @@ to store the CryptoKey instances.
 
 ### default module export
 
-> function DPoP(keypair: [CryptoKeyPair](https://developer.mozilla.org/en-US/docs/Web/API/CryptoKeyPair), alg: string, htu: string, htm: string, additional?: object) => Promise&lt;string&gt;;
+> function DPoP(keypair: [CryptoKeyPair](https://developer.mozilla.org/en-US/docs/Web/API/CryptoKeyPair), alg: string, htu: string, htm: string, accessToken?: string, additional?: object) => Promise&lt;string&gt;;
 
 ### generateKeyPair named export
 
@@ -58,4 +64,5 @@ Requires [Web Cryptography API](https://www.w3.org/TR/WebCryptoAPI/), specifical
 - [crypto.subtle.`generateKey`](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/generateKey) - [support table](https://caniuse.com/#feat=mdn-api_subtlecrypto_generatekey)
 - [crypto.subtle.`exportKey`](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/exportKey) - [support table](https://caniuse.com/#feat=mdn-api_subtlecrypto_exportkey)
 - [crypto.subtle.`sign`](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/sign) - [support table](https://caniuse.com/#feat=mdn-api_subtlecrypto_sign)
+- [crypto.subtle.`digest`](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest) - [support table](https://caniuse.com/#feat=mdn-api_subtlecrypto_digest)
 - [crypto.`getRandomValues`](https://developer.mozilla.org/en-US/docs/Web/API/Crypto/getRandomValues) - [support table](https://caniuse.com/#feat=mdn-api_crypto_getrandomvalues)
