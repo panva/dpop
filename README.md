@@ -1,7 +1,7 @@
 # DPoP
 
 > Browser-focused implementation of
-[OAuth 2.0 Demonstration of Proof-of-Possession at the Application Layer - draft-ietf-oauth-dpop-03](https://tools.ietf.org/html/draft-ietf-oauth-dpop-03).
+[OAuth 2.0 Demonstration of Proof-of-Possession at the Application Layer - draft-ietf-oauth-dpop-04](https://tools.ietf.org/html/draft-ietf-oauth-dpop-04).
 
 ## Usage
 
@@ -12,7 +12,7 @@
     <meta charset="utf-8">
     <title>it's dpop time!</title>
     <script type="module">
-      import DPoP, { generateKeyPair } from 'https://cdn.jsdelivr.net/npm/dpop@^0.6.0';
+      import DPoP, { generateKeyPair } from 'https://cdn.jsdelivr.net/npm/dpop@^0.6.1';
 
       const alg = 'ES256'; // see below for other supported JWS algorithms
       
@@ -43,6 +43,17 @@ to store the CryptoKey instances.
 ### generateKeyPair named export
 
 > function generateKeyPair(alg: string): Promise&lt;[CryptoKeyPair](https://developer.mozilla.org/en-US/docs/Web/API/CryptoKeyPair)&gt;
+
+## Server-Provided Nonce
+
+```js
+// Access Token Request with Authorization Server-Provided Nonce
+const accessTokenRequestProof = await DPoP(keypair, alg, 'https://op.example.com/token', 'POST', { nonce: 'eyJ7S_zG.eyJH0-Z.HX4w-7v' });
+
+// Protected Resource Access with Resource Server-Provided Nonce
+const accessTokenValue = 'W0lFSOAgL4oxWwnFtigwmXtL3tHNDjUCXVRasB3hQWahsVvDb0YX1Q2fk7rMJ-oy';
+const protectedResourceAccessProof = await DPoP(keypair, alg, 'https://rs.example.com/resource', 'GET', accessTokenValue, { nonce: 'eyJ7S_zG.eyJH0-Z.HX4w-7v' });
+```
 
 
 ## Supported JWS Algorithms
