@@ -4,13 +4,13 @@ const rsa = (rest: object) => ({
   ...rest,
 });
 const ps = (hash: number) =>
-  rsa({ name: "RSA-PSS", hash: { name: `SHA-${hash}` }, saltLength: hash / 8 });
+  rsa({ name: "RSA-PSS", hash: `SHA-${hash}`, saltLength: hash >> 3 });
 const rs = (hash: number) =>
-  rsa({ name: "RSASSA-PKCS1-v1_5", hash: { name: `SHA-${hash}` } });
+  rsa({ name: "RSASSA-PKCS1-v1_5", hash: `SHA-${hash}` });
 const es = (hash: number, namedCurve: string) => ({
   name: "ECDSA",
   namedCurve,
-  hash: { name: `SHA-${hash}` },
+  hash: `SHA-${hash}`,
 });
 
 const algs = {
