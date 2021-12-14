@@ -48,7 +48,7 @@ to store the CryptoKey instances.
 
 ```js
 // Access Token Request with Authorization Server-Provided Nonce
-const accessTokenRequestProof = await DPoP(keypair, alg, 'https://op.example.com/token', 'POST', { nonce: 'eyJ7S_zG.eyJH0-Z.HX4w-7v' });
+const accessTokenRequestProof = await DPoP(keypair, alg, 'https://op.example.com/token', 'POST', undefined, { nonce: 'eyJ7S_zG.eyJH0-Z.HX4w-7v' });
 
 // Protected Resource Access with Resource Server-Provided Nonce
 const accessTokenValue = 'W0lFSOAgL4oxWwnFtigwmXtL3tHNDjUCXVRasB3hQWahsVvDb0YX1Q2fk7rMJ-oy';
