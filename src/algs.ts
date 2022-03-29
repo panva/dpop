@@ -23,6 +23,7 @@ const algs = {
   ES256: es(256, "P-256"),
   ES384: es(384, "P-384"),
   ES512: es(512, "P-521"),
+  EdDSA: { name: "Ed25519" },
 };
 
 export default (alg: string) => {

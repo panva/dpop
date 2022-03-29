@@ -63,14 +63,15 @@ const protectedResourceAccessProof = await DPoP(keypair, alg, 'https://rs.exampl
 | ECDSA | ✓ | ES256, ES384, ES512 |
 | RSASSA-PSS | ✓ | PS256, PS384, PS512 |
 | RSASSA-PKCS1-v1_5 | ✓ | RS256, RS384, RS512 |
+| Edwards-curve DSA | ✓ | EdDSA |
 
 Other JWS algorithms are either not eligible for use with DPoP or unsupported by the
-[Web Cryptography API](https://www.w3.org/TR/WebCryptoAPI/).
+[Web Cryptography API](https://w3c.github.io/webcrypto/).
 
 
 ## Prerequisites
 
-Requires [Web Cryptography API](https://www.w3.org/TR/WebCryptoAPI/), specifically:
+Requires [Web Cryptography API](https://w3c.github.io/webcrypto/), specifically:
 
 - [crypto.subtle.`generateKey`](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/generateKey) - [support table](https://caniuse.com/#feat=mdn-api_subtlecrypto_generatekey)
 - [crypto.subtle.`exportKey`](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/exportKey) - [support table](https://caniuse.com/#feat=mdn-api_subtlecrypto_exportkey)
