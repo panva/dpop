@@ -1,0 +1,51 @@
+{
+  "name": "dpop",
+  "version": "0.6.0",
+  "description": "DPoP for Web Platform API JavaScript runtimes",
+  "keywords": [
+    "dpop",
+    "browser",
+    "cloudflare-workers",
+    "deno",
+    "electron",
+    "javascript",
+    "nextjs",
+    "node",
+    "nodejs",
+    "oauth",
+    "oauth2",
+    "vercel-edge"
+  ],
+  "homepage": "https://github.com/panva/dpop",
+  "repository": "panva/dpop",
+  "funding": {
+    "url": "https://github.com/sponsors/panva"
+  },
+  "license": "MIT",
+  "author": "Filip Skokan <panva.ip@gmail.com>",
+  "sideEffects": false,
+  "type": "module",
+  "main": "./build/index.js",
+  "types": "./build/index.d.ts",
+  "files": [
+    "build/index.js",
+    "build/index.d.ts"
+  ],
+  "scripts": {
+    "_format": "find src -type f -name '*.ts' -o -name '*.mjs' | xargs prettier",
+    "build": "rm -rf build && tsc && tsc --declaration true --emitDeclarationOnly true --removeComments false",
+    "docs": "npx patch-package && typedoc",
+    "format": "npm run _format -- --write",
+    "format-check": "npm run _format -- --check",
+    "prepack": "npm run format && npm run docs && npm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.34",
+    "@typescript/lib-dom": "npm:@types/web",
+    "patch-package": "^6.4.7",
+    "prettier": "^2.6.2",
+    "typedoc": "^0.22.15",
+    "typedoc-plugin-markdown": "^3.12.1",
+    "typescript": "^4.6.4"
+  }
+}

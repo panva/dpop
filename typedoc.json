@@ -1,0 +1,21 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "allReflectionsHaveOwnDocument": true,
+  "disableSources": true,
+  "hideBreadcrumbs": true,
+  "entryPoints": ["src/index.ts"],
+  "excludeExternals": true,
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "gitRevision": "main",
+  "hideGenerator": true,
+  "out": "docs",
+  "plugin": ["typedoc-plugin-markdown"],
+  "readme": "none",
+  "sort": [
+    "kind",
+    "static-first",
+    "required-first",
+    "alphabetical"
+  ]
+}
