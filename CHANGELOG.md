@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 0.7.0 (2022-05-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* updated API, updated draft to -08
+
+### Refactor
+
+* updated API, updated draft to -08 ([10dd522](https://github.com/panva/dpop/commit/10dd522f4e00fa09a91524d2d9dfb0fd1fad16f3))
+
 ## [0.6.0](https://github.com/panva/dpop/compare/v0.5.5...v0.6.0) (2021-04-08)
 
 
