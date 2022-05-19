@@ -41,6 +41,8 @@ function subtleAlgorithm(key: CryptoKey): AlgorithmIdentifier | RsaPssParams | E
     case 'RSASSA-PKCS1-v1_5':
       checkRsaKeyAlgorithm(<RsaKeyAlgorithm>key.algorithm)
       return { name: key.algorithm.name }
+    case 'Ed25519':
+      return { name: key.algorithm.name }
   }
   throw new UnsupportedOperationError()
 }
@@ -99,7 +101,7 @@ function randomBytes() {
  * }
  * ```
  *
- * @example ES256 CryptoKey algorithm
+ * @example CryptoKey algorithm for the `ES256` JWS Algorithm Identifier
  * ```ts
  * interface Es256Algorithm extends EcKeyAlgorithm {
  *   name: 'ECDSA'
@@ -107,15 +109,27 @@ function randomBytes() {
  * }
  * ```
  *
- * @example RS256 CryptoKey algorithm
+ * @example CryptoKey algorithm for the `RS256` JWS Algorithm Identifier
  * ```ts
  * interface Rs256Algorithm extends RsaHashedKeyAlgorithm {
  *   name: 'RSASSA-PKCS1-v1_5'
  *   hash: { name: 'SHA-256' }
  * }
  * ```
+ *
+ * @example CryptoKey algorithm for the `EdDSA` JWS Algorithm Identifier (Experimental)
+ *
+ * Runtime support for this algorithm is very limited, it depends on the [Secure Curves in the Web
+ * Cryptography API](https://wicg.github.io/webcrypto-secure-curves/) proposal which is yet to be
+ * widely adopted. If the proposal changes this implementation will follow up with a minor release.
+ *
+ * ```ts
+ * interface EdDSAAlgorithm extends KeyAlgorithm {
+ *   name: 'Ed25519'
+ * }
+ * ```
  */
-export type JWSAlgorithm = 'PS256' | 'ES256' | 'RS256'
+export type JWSAlgorithm = 'PS256' | 'ES256' | 'RS256' | 'EdDSA'
 
 class UnsupportedOperationError extends Error {
   constructor(message?: string) {
@@ -185,6 +199,8 @@ function determineJWSAlgorithm(key: CryptoKey) {
       return rsAlg(key)
     case 'ECDSA':
       return esAlg(key)
+    case 'Ed25519':
+      return 'EdDSA'
     default:
       throw new UnsupportedOperationError('unsupported CryptoKey algorithm name')
   }
@@ -334,7 +350,7 @@ export async function generateKeyPair(
   alg: JWSAlgorithm,
   options?: GenerateKeyPairOptions,
 ): Promise<CryptoKeyPair> {
-  let algorithm: RsaHashedKeyGenParams | EcKeyGenParams
+  let algorithm: RsaHashedKeyGenParams | EcKeyGenParams | AlgorithmIdentifier
 
   if (typeof alg !== 'string' || alg.length === 0) {
     throw new TypeError('"alg" must be a non-empty string')
@@ -360,9 +376,14 @@ export async function generateKeyPair(
     case 'ES256':
       algorithm = { name: 'ECDSA', namedCurve: 'P-256' }
       break
+    case 'EdDSA':
+      algorithm = { name: 'Ed25519' }
+      break
     default:
       throw new UnsupportedOperationError()
   }
 
-  return crypto.subtle.generateKey(algorithm, options?.extractable ?? false, ['sign', 'verify'])
+  return <Promise<CryptoKeyPair>>(
+    crypto.subtle.generateKey(algorithm, options?.extractable ?? false, ['sign', 'verify'])
+  )
 }
