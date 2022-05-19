@@ -1,6 +1,6 @@
 {
   "name": "dpop",
-  "version": "0.7.0",
+  "version": "1.0.0",
   "description": "DPoP for Web Platform API JavaScript runtimes",
   "keywords": [
     "dpop",
