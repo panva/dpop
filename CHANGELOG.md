@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/panva/dpop/compare/v1.0.0...v1.1.0) (2022-09-28)
+
+
+### Features
+
+* add EdDSA (Ed25519) JWS support ([dd52a63](https://github.com/panva/dpop/commit/dd52a63d59b157587ce2dcdc3465f4d04c20b958))
+
 ## [1.0.0](https://github.com/panva/dpop/compare/v0.7.0...v1.0.0) (2022-05-19)
 
 ## 0.7.0 (2022-05-18)
