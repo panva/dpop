@@ -36,8 +36,7 @@
     "build": "rm -rf build && tsc && tsc --declaration true --emitDeclarationOnly true --removeComments false",
     "docs": "npx patch-package && typedoc",
     "format": "npm run _format -- --write",
-    "format-check": "npm run _format -- --check",
-    "prepack": "npm run format && npm run docs && npm run build"
+    "format-check": "npm run _format -- --check"
   },
   "devDependencies": {
     "@types/node": "^17.0.34",

@@ -1,6 +1,7 @@
 {
   "commit-all": true,
   "scripts": {
+    "prerelease": "npm run format && npm run docs && npm run build",
     "postchangelog": "sed -i '' -e 's/### \\[/## [/g' CHANGELOG.md"
   },
   "types": [
