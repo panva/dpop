@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/panva/dpop/compare/v1.1.0...v1.2.0) (2023-04-26)
+
+
+### Features
+
+* release process with provenance ([1053717](https://github.com/panva/dpop/commit/10537177ffc4a1411a2d1d1df94f119d60323ed8))
+
 ## [1.1.0](https://github.com/panva/dpop/compare/v1.0.0...v1.1.0) (2022-09-28)
 
 
