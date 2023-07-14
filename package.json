@@ -24,7 +24,6 @@
   "license": "MIT",
   "author": "Filip Skokan <panva.ip@gmail.com>",
   "sideEffects": false,
-  "type": "module",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
   "files": [
