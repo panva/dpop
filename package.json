@@ -1,7 +1,7 @@
 {
   "name": "dpop",
   "version": "1.2.0",
-  "description": "DPoP for Web Platform API JavaScript runtimes",
+  "description": "DPoP (RFC9449) for Web Platform API JavaScript runtimes",
   "keywords": [
     "dpop",
     "browser",
@@ -14,6 +14,7 @@
     "nodejs",
     "oauth",
     "oauth2",
+    "rfc9449",
     "vercel-edge"
   ],
   "homepage": "https://github.com/panva/dpop",
