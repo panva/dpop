@@ -1,6 +1,6 @@
 # DPoP for Web Platform API JavaScript runtimes
 
-OAuth 2.0 Demonstration of Proof-of-Possession at the Application Layer - [draft-ietf-oauth-dpop-14][].
+OAuth 2.0 Demonstration of Proof-of-Possession at the Application Layer - [RFC9449][].
 
 ## [💗 Help the project](https://github.com/sponsors/panva)
 
@@ -52,4 +52,4 @@ The supported JavaScript runtimes include ones that
 [crypto]: https://developer.mozilla.org/en-US/docs/Web/API/crypto
 [cryptokey]: https://developer.mozilla.org/en-US/docs/Web/API/CryptoKey
 [encoding api]: https://developer.mozilla.org/en-US/docs/Web/API/Encoding_API
-[draft-ietf-oauth-dpop-14]: https://www.ietf.org/archive/id/draft-ietf-oauth-dpop-14.html
+[rfc9449]: https://www.rfc-editor.org/rfc/rfc9449.html
