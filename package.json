@@ -1,6 +1,6 @@
 {
   "name": "dpop",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "DPoP (RFC9449) for Web Platform API JavaScript runtimes",
   "keywords": [
     "dpop",
