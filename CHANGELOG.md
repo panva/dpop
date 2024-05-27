@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.1](https://github.com/panva/dpop/compare/v1.4.0...v1.4.1) (2024-05-27)
+
+
+### Fixes
+
+* `additional` may not be null ([#10](https://github.com/panva/dpop/issues/10)) ([be6b00b](https://github.com/panva/dpop/commit/be6b00bba8bcbbf53445eb92aa459fd96387d9b7))
+
 ## [1.4.0](https://github.com/panva/dpop/compare/v1.2.0...v1.4.0) (2023-09-08)
 
 
