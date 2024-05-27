@@ -293,7 +293,7 @@ export default async function DPoP(
 
   if (
     additional !== undefined &&
-    (typeof additional !== 'object' || typeof additional === null || Array.isArray(additional))
+    (typeof additional !== 'object' || additional === null || Array.isArray(additional))
   ) {
     throw new TypeError('"additional" must be an object')
   }
