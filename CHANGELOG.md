@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/panva/dpop/compare/v1.4.1...v2.0.0) (2025-06-19)
+
+
+### ⚠ BREAKING CHANGES
+
+* use named exports, update docs, update dev deps and workflows
+* remove the modulusLength generate key option
+* remove the EdDSA deprecated algorithm support
+
+### Features
+
+* add support for the fully-specified Ed25519 JWS Algorithm ([ca266d9](https://github.com/panva/dpop/commit/ca266d9be0ba819b6ec9bbd39c4bb16a1cd64a8f))
+
+
+### Refactor
+
+* remove the EdDSA deprecated algorithm support ([cc050dc](https://github.com/panva/dpop/commit/cc050dc912b0bd5ea3aae6d4ca979eb58bd2dabb))
+* remove the modulusLength generate key option ([6c6c6e4](https://github.com/panva/dpop/commit/6c6c6e48f3d02f15b7bd2cf6cee2353fd722d764))
+* use named exports, update docs, update dev deps and workflows ([3502f38](https://github.com/panva/dpop/commit/3502f38ff56e4060a16e9f9f5212d5bf2f02174b))
+
 ## [1.4.1](https://github.com/panva/dpop/compare/v1.4.0...v1.4.1) (2024-05-27)
 
 
