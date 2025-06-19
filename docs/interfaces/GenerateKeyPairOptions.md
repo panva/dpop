@@ -12,5 +12,4 @@ Support from the community to continue maintaining and improving this module is 
 
 • `optional` **extractable**: `boolean`
 
-Indicates whether or not the private key may be exported.
-Default is `false`.
+Indicates whether or not the private key may be exported. Default is `false`.

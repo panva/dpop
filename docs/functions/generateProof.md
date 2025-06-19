@@ -18,7 +18,7 @@ Generates a unique DPoP Proof JWT.
 | `htu` | `string` | The HTTP URI (without query and fragment parts) of the request |
 | `htm` | `string` | The HTTP method of the request |
 | `nonce`? | `string` | Server-provided nonce. |
-| `accessToken`? | `string` | Associated access token's value. |
+| `accessToken`? | `string` | Access token's value (When making protected resource requests). |
 | `additional`? | [`Record`](https://www.typescriptlang.org/docs/handbook/utility-types.html#recordkeys-type)\<`string`, [`JsonValue`](../type-aliases/JsonValue.md)\> | Any additional claims. |
 
 ## Returns

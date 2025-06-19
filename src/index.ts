@@ -115,6 +115,7 @@ function randomBytes() {
  * Supported JWS `alg` Algorithm identifiers.
  *
  * @example CryptoKey algorithm for the ES256 JWS Algorithm Identifier
+ *
  * ```ts
  * interface ES256Algorithm extends EcKeyAlgorithm {
  *   name: 'ECDSA'
@@ -123,6 +124,7 @@ function randomBytes() {
  * ```
  *
  * @example CryptoKey algorithm for the Ed25519 JWS Algorithm Identifier
+ *
  * ```ts
  * interface Ed25519Algorithm extends Algorithm {
  *   name: 'Ed25519'
@@ -130,6 +132,7 @@ function randomBytes() {
  * ```
  *
  * @example CryptoKey algorithm for the PS256 JWS Algorithm Identifier
+ *
  * ```ts
  * interface PS256Algorithm extends RsaHashedKeyAlgorithm {
  *   name: 'RSA-PSS'
@@ -138,6 +141,7 @@ function randomBytes() {
  * ```
  *
  * @example CryptoKey algorithm for the RS256 JWS Algorithm Identifier
+ *
  * ```ts
  * interface RS56Algorithm extends RsaHashedKeyAlgorithm {
  *   name: 'RSASSA-PKCS1-v1_5'
@@ -166,8 +170,7 @@ class OperationProcessingError extends Error {
 }
 
 /**
- * Determines an RSASSA-PSS algorithm identifier from CryptoKey instance
- * properties.
+ * Determines an RSASSA-PSS algorithm identifier from CryptoKey instance properties.
  */
 function psAlg(key: CryptoKey): JWSAlgorithm {
   switch ((<RsaHashedKeyAlgorithm>key.algorithm).hash.name) {
@@ -179,8 +182,7 @@ function psAlg(key: CryptoKey): JWSAlgorithm {
 }
 
 /**
- * Determines an RSASSA-PKCS1-v1_5 algorithm identifier from CryptoKey instance
- * properties.
+ * Determines an RSASSA-PKCS1-v1_5 algorithm identifier from CryptoKey instance properties.
  */
 function rsAlg(key: CryptoKey): JWSAlgorithm {
   switch ((<RsaHashedKeyAlgorithm>key.algorithm).hash.name) {
@@ -204,8 +206,7 @@ function esAlg(key: CryptoKey): JWSAlgorithm {
 }
 
 /**
- * Determines a supported JWS `alg` identifier from CryptoKey instance
- * properties.
+ * Determines a supported JWS `alg` identifier from CryptoKey instance properties.
  */
 function determineJWSAlgorithm(key: CryptoKey) {
   switch (key.algorithm.name) {
@@ -253,8 +254,7 @@ export interface KeyPair extends CryptoKeyPair {
   /**
    * Private CryptoKey instance to sign the DPoP Proof JWT with.
    *
-   * Its algorithm must be compatible with a supported
-   * {@link JWSAlgorithm JWS `alg` Algorithm}.
+   * Its algorithm must be compatible with a supported {@link JWSAlgorithm JWS `alg` Algorithm}.
    */
   privateKey: CryptoKey
 
@@ -271,7 +271,7 @@ export interface KeyPair extends CryptoKeyPair {
  * @param htu The HTTP URI (without query and fragment parts) of the request
  * @param htm The HTTP method of the request
  * @param nonce Server-provided nonce.
- * @param accessToken Associated access token's value.
+ * @param accessToken Access token's value (When making protected resource requests).
  * @param additional Any additional claims.
  */
 export async function generateProof(
@@ -340,7 +340,7 @@ export async function generateProof(
 }
 
 /**
- * exports an asymmetric crypto key as bare JWK
+ * Exports an asymmetric crypto key as bare JWK
  */
 async function publicJwk(key: CryptoKey) {
   const { kty, e, n, x, y, crv } = await crypto.subtle.exportKey('jwk', key)
@@ -349,16 +349,13 @@ async function publicJwk(key: CryptoKey) {
 
 export interface GenerateKeyPairOptions {
   /**
-   * Indicates whether or not the private key may be exported.
-   * Default is `false`.
+   * Indicates whether or not the private key may be exported. Default is `false`.
    */
   extractable?: boolean
 }
 
 /**
- * Generates a
- * {@link https://developer.mozilla.org/en-US/docs/Web/API/CryptoKeyPair CryptoKeyPair}
- * for a given JWS `alg` Algorithm identifier.
+ * Generates a {@link KeyPair} for a given JWS `alg` Algorithm identifier.
  *
  * @param alg Supported JWS `alg` Algorithm identifier.
  */

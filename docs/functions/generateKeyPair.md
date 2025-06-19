@@ -8,9 +8,7 @@ Support from the community to continue maintaining and improving this module is 
 
 ▸ **generateKeyPair**(`alg`, `options`?): [`Promise`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<[`KeyPair`](../interfaces/KeyPair.md)\>
 
-Generates a
-[CryptoKeyPair](https://developer.mozilla.org/en-US/docs/Web/API/CryptoKeyPair)
-for a given JWS `alg` Algorithm identifier.
+Generates a [KeyPair](../interfaces/KeyPair.md) for a given JWS `alg` Algorithm identifier.
 
 ## Parameters
 
