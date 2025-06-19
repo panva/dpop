@@ -73,18 +73,31 @@ async function jwt(
   return `${input}.${signature}`
 }
 
-const CHUNK_SIZE = 0x8000
-function encodeBase64Url(input: Uint8Array | ArrayBuffer) {
-  if (input instanceof ArrayBuffer) {
-    input = new Uint8Array(input)
-  }
+let encodeBase64Url: (input: Uint8Array | ArrayBuffer) => string
+// @ts-expect-error
+if (Uint8Array.prototype.toBase64) {
+  encodeBase64Url = (input) => {
+    if (input instanceof ArrayBuffer) {
+      input = new Uint8Array(input)
+    }
 
-  const arr = []
-  for (let i = 0; i < input.byteLength; i += CHUNK_SIZE) {
     // @ts-expect-error
-    arr.push(String.fromCharCode.apply(null, input.subarray(i, i + CHUNK_SIZE)))
+    return input.toBase64({ alphabet: 'base64url', omitPadding: true })
   }
-  return btoa(arr.join('')).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_')
+} else {
+  const CHUNK_SIZE = 0x8000
+  encodeBase64Url = (input) => {
+    if (input instanceof ArrayBuffer) {
+      input = new Uint8Array(input)
+    }
+
+    const arr = []
+    for (let i = 0; i < input.byteLength; i += CHUNK_SIZE) {
+      // @ts-expect-error
+      arr.push(String.fromCharCode.apply(null, input.subarray(i, i + CHUNK_SIZE)))
+    }
+    return btoa(arr.join('')).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_')
+  }
 }
 
 function b64u(input: Uint8Array | ArrayBuffer) {
