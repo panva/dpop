@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/panva/dpop/compare/v2.0.0...v2.1.0) (2025-06-19)
+
+
+### Features
+
+* support for calculating dpop_jkt ([64ef4ce](https://github.com/panva/dpop/commit/64ef4ce01528a511ffb92fd48195f894d2488184))
+
 ## [2.0.0](https://github.com/panva/dpop/compare/v1.4.1...v2.0.0) (2025-06-19)
 
 
