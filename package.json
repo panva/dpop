@@ -1,21 +1,10 @@
 {
   "name": "dpop",
   "version": "1.4.1",
-  "description": "DPoP (RFC9449) for Web Platform API JavaScript runtimes",
+  "description": "DPoP (RFC9449) for JavaScript Runtimes",
   "keywords": [
     "dpop",
-    "browser",
-    "cloudflare-workers",
-    "deno",
-    "electron",
-    "javascript",
-    "nextjs",
-    "node",
-    "nodejs",
-    "oauth",
-    "oauth2",
-    "rfc9449",
-    "vercel-edge"
+    "rfc9449"
   ],
   "homepage": "https://github.com/panva/dpop",
   "repository": "panva/dpop",
@@ -26,15 +15,23 @@
   "author": "Filip Skokan <panva.ip@gmail.com>",
   "sideEffects": false,
   "type": "module",
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "default": "./build/index.js"
+    },
+    "./package.json": "./package.json"
+  },
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
   "files": [
     "build/index.js",
+    "build/index.js.map",
     "build/index.d.ts"
   ],
   "scripts": {
     "_format": "find src -type f -name '*.ts' -o -name '*.mjs' | xargs prettier",
-    "build": "rm -rf build && tsc && tsc --declaration true --emitDeclarationOnly true --removeComments false",
+    "build": "rm -rf build && tsc --sourceMap && tsc --declaration true --emitDeclarationOnly true --removeComments false",
     "docs": "npx patch-package && typedoc",
     "format": "npm run _format -- --write",
     "format-check": "npm run _format -- --check"
