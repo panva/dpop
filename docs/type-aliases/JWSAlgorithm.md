@@ -6,7 +6,7 @@ Support from the community to continue maintaining and improving this module is 
 
 ***
 
-• **JWSAlgorithm**: `"PS256"` \| `"ES256"` \| `"RS256"`
+• **JWSAlgorithm**: `"ES256"` \| `"Ed25519"` \| `"RS256"` \| `"PS256"`
 
 Supported JWS `alg` Algorithm identifiers.
 
@@ -16,6 +16,12 @@ Supported JWS `alg` Algorithm identifiers.
 interface ES256Algorithm extends EcKeyAlgorithm {
   name: 'ECDSA'
   namedCurve: 'P-256'
+}
+```
+
+```ts
+interface Ed25519Algorithm extends Algorithm {
+  name: 'Ed25519'
 }
 ```
 

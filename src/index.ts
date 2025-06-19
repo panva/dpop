@@ -36,7 +36,7 @@ function checkRsaKeyAlgorithm(algorithm: RsaKeyAlgorithm) {
   }
 }
 
-function subtleAlgorithm(key: CryptoKey): AlgorithmIdentifier | RsaPssParams | EcdsaParams {
+function subtleAlgorithm(key: CryptoKey): Algorithm | RsaPssParams | EcdsaParams {
   switch (key.algorithm.name) {
     case 'ECDSA':
       return <EcdsaParams>{ name: key.algorithm.name, hash: 'SHA-256' }
@@ -109,6 +109,13 @@ function randomBytes() {
  * }
  * ```
  *
+ * @example CryptoKey algorithm for the Ed25519 JWS Algorithm Identifier
+ * ```ts
+ * interface Ed25519Algorithm extends Algorithm {
+ *   name: 'Ed25519'
+ * }
+ * ```
+ *
  * @example CryptoKey algorithm for the PS256 JWS Algorithm Identifier
  * ```ts
  * interface PS256Algorithm extends RsaHashedKeyAlgorithm {
@@ -125,7 +132,7 @@ function randomBytes() {
  * }
  * ```
  */
-export type JWSAlgorithm = 'PS256' | 'ES256' | 'RS256'
+export type JWSAlgorithm = 'ES256' | 'Ed25519' | 'RS256' | 'PS256'
 
 class UnsupportedOperationError extends Error {
   constructor(message?: string) {
@@ -195,6 +202,8 @@ function determineJWSAlgorithm(key: CryptoKey) {
       return rsAlg(key)
     case 'ECDSA':
       return esAlg(key)
+    case 'Ed25519':
+      return 'Ed25519'
     default:
       throw new UnsupportedOperationError('unsupported CryptoKey algorithm name')
   }
@@ -369,6 +378,9 @@ export async function generateKeyPair(
       break
     case 'ES256':
       algorithm = { name: 'ECDSA', namedCurve: 'P-256' }
+      break
+    case 'Ed25519':
+      algorithm = { name: 'Ed25519' }
       break
     default:
       throw new UnsupportedOperationError()
