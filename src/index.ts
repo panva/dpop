@@ -393,3 +393,32 @@ export async function generateKeyPair(
     crypto.subtle.generateKey(algorithm, options?.extractable ?? false, ['sign', 'verify'])
   )
 }
+
+/**
+ * Calculates the JWK Thumbprint of the DPoP public key using the SHA-256 hash function for use as
+ * the optional `dpop_jkt` authorization request parameter.
+ */
+export async function calculateThumbprint(publicKey: CryptoKey): Promise<string> {
+  if (!isPublicKey(publicKey)) {
+    throw new TypeError('"publicKey" must be a public CryptoKey')
+  }
+  if (publicKey.extractable !== true) {
+    throw new TypeError('"publicKey.extractable" must be true')
+  }
+  const jwk = await publicJwk(publicKey)
+  let components: JsonValue
+  switch (jwk.kty) {
+    case 'EC':
+      components = { crv: jwk.crv, kty: jwk.kty, x: jwk.x, y: jwk.y }
+      break
+    case 'OKP':
+      components = { crv: jwk.crv, kty: jwk.kty, x: jwk.x }
+      break
+    case 'RSA':
+      components = { e: jwk.e, kty: jwk.kty, n: jwk.n }
+      break
+    default:
+      throw new UnsupportedOperationError('unsupported JWK kty')
+  }
+  return b64u(await crypto.subtle.digest({ name: 'SHA-256' }, buf(JSON.stringify(components))))
+}

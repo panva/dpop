@@ -31,6 +31,12 @@ let nonce!: string | undefined
 const proof = await DPoP.generateProof(keypair, 'https://as.example.com/token', 'POST', nonce)
 ```
 
+### AS Authorization Code Binding via `dpop_jkt`
+
+```ts
+const dpop_jkt = await DPoP.calculateThumbprint(keyPair.publicKey)
+```
+
 ### AS proof generation
 
 ```ts

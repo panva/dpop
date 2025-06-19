@@ -19,5 +19,6 @@ Support from the community to continue maintaining and improving this module is 
 
 ## Functions
 
+- [calculateThumbprint](functions/calculateThumbprint.md)
 - [generateKeyPair](functions/generateKeyPair.md)
 - [generateProof](functions/generateProof.md)
