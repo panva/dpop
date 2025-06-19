@@ -105,13 +105,6 @@ function b64u(input: Uint8Array | ArrayBuffer) {
 }
 
 /**
- * Generates 32 random bytes and encodes them using base64url.
- */
-function randomBytes() {
-  return b64u(crypto.getRandomValues(new Uint8Array(32)))
-}
-
-/**
  * Supported JWS `alg` Algorithm identifiers.
  *
  * @example CryptoKey algorithm for the ES256 JWS Algorithm Identifier
@@ -329,7 +322,7 @@ export async function generateProof(
     {
       ...additional,
       iat: epochTime(),
-      jti: randomBytes(),
+      jti: crypto.randomUUID(),
       htm,
       nonce,
       htu,
