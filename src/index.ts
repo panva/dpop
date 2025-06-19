@@ -116,20 +116,8 @@ function randomBytes() {
  *   hash: { name: 'SHA-256' }
  * }
  * ```
- *
- * @example CryptoKey algorithm for the `EdDSA` JWS Algorithm Identifier (Experimental)
- *
- * Runtime support for this algorithm is very limited, it depends on the [Secure Curves in the Web
- * Cryptography API](https://wicg.github.io/webcrypto-secure-curves/) proposal which is yet to be
- * widely adopted. If the proposal changes this implementation will follow up with a minor release.
- *
- * ```ts
- * interface EdDSAAlgorithm extends KeyAlgorithm {
- *   name: 'Ed25519'
- * }
- * ```
  */
-export type JWSAlgorithm = 'PS256' | 'ES256' | 'RS256' | 'EdDSA'
+export type JWSAlgorithm = 'PS256' | 'ES256' | 'RS256'
 
 class UnsupportedOperationError extends Error {
   constructor(message?: string) {
@@ -199,8 +187,6 @@ function determineJWSAlgorithm(key: CryptoKey) {
       return rsAlg(key)
     case 'ECDSA':
       return esAlg(key)
-    case 'Ed25519':
-      return 'EdDSA'
     default:
       throw new UnsupportedOperationError('unsupported CryptoKey algorithm name')
   }
@@ -375,9 +361,6 @@ export async function generateKeyPair(
       break
     case 'ES256':
       algorithm = { name: 'ECDSA', namedCurve: 'P-256' }
-      break
-    case 'EdDSA':
-      algorithm = { name: 'Ed25519' }
       break
     default:
       throw new UnsupportedOperationError()
