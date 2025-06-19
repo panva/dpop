@@ -2,9 +2,8 @@
   "files": ["src/index.ts"],
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
-    "target": "ES2020",
-    "module": "ES2020",
-    "moduleResolution": "Node",
+    "target": "ES2022",
+    "module": "ES2022",
     "strict": true,
     "removeComments": true,
     "outDir": "build",
@@ -13,9 +12,11 @@
     "noImplicitAny": true,
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
-    "importsNotUsedAsValues": "error",
+    "verbatimModuleSyntax": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitOverride": true,
-    "noImplicitReturns": true
+    "noImplicitReturns": true,
+    "lib": ["ES2022", "DOM"],
+    "types": []
   }
 }

@@ -2,30 +2,25 @@
 
 [💗 Help the project](https://github.com/sponsors/panva)
 
-## Table of contents
+Support from the community to continue maintaining and improving this module is welcome. If you find the module useful, please consider supporting the project by [becoming a sponsor](https://github.com/sponsors/panva).
 
-### Properties
-
-- [privateKey](KeyPair.md#privatekey)
-- [publicKey](KeyPair.md#publickey)
+***
 
 ## Properties
 
 ### privateKey
 
-• **privateKey**: `CryptoKey`
+• **privateKey**: [`CryptoKey`](https://developer.mozilla.org/docs/Web/API/CryptoKey)
 
-Private
-[CryptoKey](https://developer.mozilla.org/en-US/docs/Web/API/CryptoKey)
-instance to sign the DPoP Proof JWT with.
+Private CryptoKey instance to sign the DPoP Proof JWT with.
 
 Its algorithm must be compatible with a supported
-[JWS `alg` Algorithm](../types/JWSAlgorithm.md).
+[JWS `alg` Algorithm](../type-aliases/JWSAlgorithm.md).
 
-___
+***
 
 ### publicKey
 
-• **publicKey**: `CryptoKey`
+• **publicKey**: [`CryptoKey`](https://developer.mozilla.org/docs/Web/API/CryptoKey)
 
-The public key corresponding to {@link DPoPOptions.privateKey}
+The public CryptoKey instance corresponding to [KeyPair.privateKey](KeyPair.md#privatekey)

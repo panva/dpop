@@ -6,50 +6,57 @@ OAuth 2.0 Demonstration of Proof-of-Possession at the Application Layer - [RFC94
 
 ## Dependencies: 0
 
-## [Documentation](docs/README.md)
+## [API Reference](docs/README.md)
 
-**`example`** ESM import
+`dpop` is distributed via [npmjs.com](https://www.npmjs.com/package/dpop), [jsdelivr.com](https://www.jsdelivr.com/package/npm/dpop), and [github.com](https://github.com/panva/dpop).
 
-```js
-import DPoP, { generateKeyPair } from 'dpop'
+## Example ESM import[^cjs]
+
+```ts
+import * as DPoP from 'dpop'
 ```
 
-**`example`** Deno import
+## Example DPoP Key Pair generation
 
-```js
-import DPoP, { generateKeyPair } from 'https://deno.land/x/dpop/src/index.ts'
+```ts
+const keypair = await DPoP.generateKeyPair('ES256', { extractable: false })
 ```
 
-## Runtime requirements
+## Example AS proof
 
-The supported JavaScript runtimes include ones that
+```ts
+let nonce!: string | undefined
+const proof = DPoP.generateProof(keypair, 'https://as.example.com/token', 'POST', nonce)
+```
 
-- are reasonably up to date ECMAScript (targets ES2020, but may be further transpiled for compatibility)
-- support required Web API globals and standard built-in objects
-  - [Web Crypto API][] and its related globals [crypto][], [CryptoKey][]
-  - [Encoding API][] and its related globals [TextEncoder][], [TextDecoder][]
-  - [btoa][]
-  - [Uint8Array][]
-- These are (not an exhaustive list):
-  - Browsers
-  - Cloudflare Workers
-  - Deno (^1.21.0)
-  - Electron
-  - Next.js Middlewares
-  - Node.js (runtime flags may be needed)
-  - Vercel Edge Functions
+## Example AS proof
 
-## Out of scope
+```ts
+let nonce!: string | undefined
+let accessToken!: string
 
-- CommonJS
+const proof = DPoP.generateProof(keypair, 'https://rs.example.com/api', 'GET', nonce, accessToken)
+```
 
-[web crypto api]: https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API
-[textdecoder]: https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder
-[textencoder]: https://developer.mozilla.org/en-US/docs/Web/API/TextEncoder
-[btoa]: https://developer.mozilla.org/en-US/docs/Web/API/btoa
-[atob]: https://developer.mozilla.org/en-US/docs/Web/API/atob
-[uint8array]: https://developer.mozilla.org/en-US/docs/Web/API/Uint8Array
-[crypto]: https://developer.mozilla.org/en-US/docs/Web/API/crypto
-[cryptokey]: https://developer.mozilla.org/en-US/docs/Web/API/CryptoKey
-[encoding api]: https://developer.mozilla.org/en-US/docs/Web/API/Encoding_API
+## Supported Runtimes
+
+The supported JavaScript runtimes include those that support the utilized Web API globals and standard built-in objects. These are _(but are not limited to)_:
+
+- Browsers
+- Bun
+- Cloudflare Workers
+- Deno
+- Electron
+- Node.js[^nodejs]
+- Vercel's Edge Runtime
+
+## Supported Versions
+
+| Version                                         | Security Fixes 🔑 | Other Bug Fixes 🐞 | New Features ⭐ |
+| ----------------------------------------------- | ----------------- | ------------------ | --------------- |
+| [v2.x](https://github.com/panva/dpop/tree/v2.x) | [Security Policy] | ✅                 | ✅              |
+
 [rfc9449]: https://www.rfc-editor.org/rfc/rfc9449.html
+[Security Policy]: https://github.com/panva/dpop/security/policy
+
+[^cjs]: CJS style `let dpop = require('dpop')` is possible in Node.js versions where the `require(esm)` feature is enabled by default (^20.19.0 || ^22.12.0 || >= 23.0.0).

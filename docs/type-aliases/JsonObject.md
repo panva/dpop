@@ -1,4 +1,4 @@
-# Interface: GenerateKeyPairOptions
+# Type Alias: JsonObject
 
 [💗 Help the project](https://github.com/sponsors/panva)
 
@@ -6,11 +6,4 @@ Support from the community to continue maintaining and improving this module is 
 
 ***
 
-## Properties
-
-### extractable?
-
-• `optional` **extractable**: `boolean`
-
-Indicates whether or not the private key may be exported.
-Default is `false`.
+• **JsonObject**: `{ [Key in string]?: JsonValue }`

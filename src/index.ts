@@ -3,6 +3,14 @@ export type JsonArray = JsonValue[]
 export type JsonPrimitive = string | number | boolean | null
 export type JsonValue = JsonPrimitive | JsonObject | JsonArray
 
+/**
+ * @ignore
+ */
+export type CryptoKey = Extract<
+  Awaited<ReturnType<typeof crypto.subtle.generateKey>>,
+  { type: string }
+>
+
 const encoder = new TextEncoder()
 const decoder = new TextDecoder()
 
@@ -93,25 +101,25 @@ function randomBytes() {
 /**
  * Supported JWS `alg` Algorithm identifiers.
  *
- * @example PS256 CryptoKey algorithm
+ * @example CryptoKey algorithm for the ES256 JWS Algorithm Identifier
  * ```ts
- * interface Ps256Algorithm extends RsaHashedKeyAlgorithm {
- *   name: 'RSA-PSS'
- *   hash: { name: 'SHA-256' }
- * }
- * ```
- *
- * @example CryptoKey algorithm for the `ES256` JWS Algorithm Identifier
- * ```ts
- * interface Es256Algorithm extends EcKeyAlgorithm {
+ * interface ES256Algorithm extends EcKeyAlgorithm {
  *   name: 'ECDSA'
  *   namedCurve: 'P-256'
  * }
  * ```
  *
- * @example CryptoKey algorithm for the `RS256` JWS Algorithm Identifier
+ * @example CryptoKey algorithm for the PS256 JWS Algorithm Identifier
  * ```ts
- * interface Rs256Algorithm extends RsaHashedKeyAlgorithm {
+ * interface PS256Algorithm extends RsaHashedKeyAlgorithm {
+ *   name: 'RSA-PSS'
+ *   hash: { name: 'SHA-256' }
+ * }
+ * ```
+ *
+ * @example CryptoKey algorithm for the RS256 JWS Algorithm Identifier
+ * ```ts
+ * interface RS56Algorithm extends RsaHashedKeyAlgorithm {
  *   name: 'RSASSA-PKCS1-v1_5'
  *   hash: { name: 'SHA-256' }
  * }
@@ -211,11 +219,17 @@ function epochTime() {
   return Math.floor(Date.now() / 1000)
 }
 
+/**
+ * @ignore
+ */
+export interface CryptoKeyPair {
+  privateKey: CryptoKey
+  publicKey: CryptoKey
+}
+
 export interface KeyPair extends CryptoKeyPair {
   /**
-   * Private
-   * {@link https://developer.mozilla.org/en-US/docs/Web/API/CryptoKey CryptoKey}
-   * instance to sign the DPoP Proof JWT with.
+   * Private CryptoKey instance to sign the DPoP Proof JWT with.
    *
    * Its algorithm must be compatible with a supported
    * {@link JWSAlgorithm JWS `alg` Algorithm}.
@@ -223,7 +237,7 @@ export interface KeyPair extends CryptoKeyPair {
   privateKey: CryptoKey
 
   /**
-   * The public key corresponding to {@link DPoPOptions.privateKey}
+   * The public CryptoKey instance corresponding to {@link KeyPair.privateKey}
    */
   publicKey: CryptoKey
 }
@@ -238,7 +252,7 @@ export interface KeyPair extends CryptoKeyPair {
  * @param accessToken Associated access token's value.
  * @param additional Any additional claims.
  */
-export default async function DPoP(
+export async function generateProof(
   keypair: KeyPair,
   htu: string,
   htm: string,
@@ -329,7 +343,7 @@ export interface GenerateKeyPairOptions {
 export async function generateKeyPair(
   alg: JWSAlgorithm,
   options?: GenerateKeyPairOptions,
-): Promise<CryptoKeyPair> {
+): Promise<KeyPair> {
   let algorithm: RsaHashedKeyGenParams | EcKeyGenParams | AlgorithmIdentifier
 
   if (typeof alg !== 'string' || alg.length === 0) {
@@ -360,7 +374,7 @@ export async function generateKeyPair(
       throw new UnsupportedOperationError()
   }
 
-  return <Promise<CryptoKeyPair>>(
+  return <Promise<KeyPair>>(
     crypto.subtle.generateKey(algorithm, options?.extractable ?? false, ['sign', 'verify'])
   )
 }
