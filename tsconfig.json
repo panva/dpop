@@ -2,7 +2,7 @@
   "files": ["src/index.ts"],
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
-    "target": "ES2022",
+    "target": "ES2017",
     "module": "ES2022",
     "strict": true,
     "removeComments": true,
