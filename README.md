@@ -37,7 +37,7 @@ const proof = await DPoP.generateProof(keypair, 'https://as.example.com/token', 
 const dpop_jkt = await DPoP.calculateThumbprint(keyPair.publicKey)
 ```
 
-### AS proof generation
+### RS proof generation
 
 ```ts
 let nonce!: string | undefined
