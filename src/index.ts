@@ -383,10 +383,11 @@ export interface KeyPair extends CryptoKeyPair {
  * @param nonce Server-provided nonce.
  * @param accessToken Access token's value (When making protected resource requests).
  * @param additional Any additional claims.
- * @param keyId A optional kid to add them to the jwk. If not set a empty uuid will be added
  * @param issuedAt A optional epoch timestamp to add them to the dpop as iat. If not set DateTime.now() will be used
- * @param expiredAt A optional epoch timestamp to add them to the dpop as exp. If not set iat + 30 will be used
- * 
+ * @param keyId A optional kid to add them to the jwk. If not set claim will not be added
+ *
+ * @remarks
+ *  To set the expiry date using an exp claim, please use the additional parameter and set the exp to the desired epoch timestamp
  */
 export async function generateProof(
   keypair: KeyPair,
@@ -395,9 +396,8 @@ export async function generateProof(
   nonce?: string,
   accessToken?: string,
   additional?: Record<string, JsonValue>,
-  keyId?: string,
   issuedAt?: number,
-  expiredAt?: number,
+  keyId?: string,
 ): Promise<string> {
   const privateKey = keypair?.privateKey
   const publicKey = keypair?.publicKey
@@ -438,7 +438,6 @@ export async function generateProof(
   }
 
   const iat = issuedAt ?? epochTime();
-  const exp = expiredAt ?? (iat + 30);
 
   return jwt(
     {
@@ -449,7 +448,6 @@ export async function generateProof(
     {
       ...additional,
       iat,
-      exp,
       jti: crypto.randomUUID(),
       htm,
       nonce,
@@ -463,8 +461,7 @@ export async function generateProof(
 /**
  * Exports an asymmetric crypto key as bare JWK
  */
-async function publicJwk(key: CryptoKey, keyId?: string) {
-  const kid = keyId ?? '00000000-0000-0000-0000-000000000000';
+async function publicJwk(key: CryptoKey, kid?: string) {
   const { alg, crv, e, kty, n, x, y } = await crypto.subtle.exportKey('jwk', key);
   return { alg, crv, e, kid, kty, n, x, y };
 }
