@@ -36,10 +36,17 @@ function checkRsaKeyAlgorithm(algorithm: RsaKeyAlgorithm) {
   }
 }
 
-function subtleAlgorithm(key: CryptoKey): Algorithm | RsaPssParams | EcdsaParams {
+function checkECDSAAlgorithm(algorithm?: JWSAlgorithm): algorithm is ESJWSAlgorithm {
+  return algorithm === 'ES256' || algorithm === 'ES384' || algorithm === 'ES512';
+}
+
+function subtleAlgorithm(key: CryptoKey, algorithmIdentifier?: JWSAlgorithm): Algorithm | RsaPssParams | EcdsaParams {
   switch (key.algorithm.name) {
     case 'ECDSA':
-      return <EcdsaParams>{ name: key.algorithm.name, hash: 'SHA-256' }
+      if(checkECDSAAlgorithm(algorithmIdentifier)){
+        return <EcdsaParams>{ name: key.algorithm.name, hash: esHash(algorithmIdentifier) }
+      }
+      throw new OperationProcessingError(`${algorithmIdentifier} must be one of the supported ECDA algorithms`)
     case 'RSA-PSS':
       checkRsaKeyAlgorithm(<RsaKeyAlgorithm>key.algorithm)
       return <RsaPssParams>{
@@ -69,7 +76,7 @@ async function jwt(
     )
   }
   const input = `${b64u(buf(JSON.stringify(header)))}.${b64u(buf(JSON.stringify(claimsSet)))}`
-  const signature = b64u(await crypto.subtle.sign(subtleAlgorithm(key), key, buf(input)))
+  const signature = b64u(await crypto.subtle.sign(subtleAlgorithm(key, header.alg), key, buf(input)))
   return `${input}.${signature}`
 }
 
@@ -105,6 +112,40 @@ function b64u(input: Uint8Array | ArrayBuffer) {
 }
 
 /**
+ * Supported JWS `hash` Algorithm identifiers.
+ *
+ * @example Hash algorithm for the ES256 JWS Algorithm Identifier
+ *
+ * ```ts
+ * interface ES256Params extends EcdsaParams {
+ *   name: 'ECDSA'
+ *   hash: 'SHA-256'
+ * }
+ * ```
+ * Supported JWS `hash` Algorithm identifiers.
+ *
+ * @example Hash algorithm for the ES384 JWS Algorithm Identifier
+ *
+ * ```ts
+ * interface ES384Params extends EcdsaParams {
+ *   name: 'ECDSA'
+ *   hash: 'SHA-384'
+ * }
+ * ```
+  * Supported JWS `hash` Algorithm identifiers.
+ *
+ * @example Hash algorithm for the ES512 JWS Algorithm Identifier
+ *
+ * ```ts
+ * interface ES512Params extends EcdsaParams {
+ *   name: 'ECDSA'
+ *   hash: 'SHA-512'
+ * }
+ * ```
+ */
+export type ESHashAlgorithm = 'SHA-256' |'SHA-384'| 'SHA-512'
+
+/**
  * Supported JWS `alg` Algorithm identifiers.
  *
  * @example CryptoKey algorithm for the ES256 JWS Algorithm Identifier
@@ -113,6 +154,60 @@ function b64u(input: Uint8Array | ArrayBuffer) {
  * interface ES256Algorithm extends EcKeyAlgorithm {
  *   name: 'ECDSA'
  *   namedCurve: 'P-256'
+ * }
+ * ```
+ * Supported JWS `alg` Algorithm identifiers.
+ *
+ * @example CryptoKey algorithm for the ES384 JWS Algorithm Identifier
+ *
+ * ```ts
+ * interface ES384Algorithm extends EcKeyAlgorithm {
+ *   name: 'ECDSA'
+ *   namedCurve: 'P-384'
+ * }
+ * ```
+  * Supported JWS `alg` Algorithm identifiers.
+ *
+ * @example CryptoKey algorithm for the ES512 JWS Algorithm Identifier
+ *
+ * ```ts
+ * interface ES512Algorithm extends EcKeyAlgorithm {
+ *   name: 'ECDSA'
+ *   namedCurve: 'P-521'
+ * }
+ * ```
+ */
+export type ESJWSAlgorithm = 'ES256' | 'ES384' | 'ES512'
+
+/**
+ * Supported JWS `alg` Algorithm identifiers.
+ *
+ * @example CryptoKey algorithm for the ES256 JWS Algorithm Identifier
+ *
+ * ```ts
+ * interface ES256Algorithm extends EcKeyAlgorithm {
+ *   name: 'ECDSA'
+ *   namedCurve: 'P-256'
+ * }
+ * ```
+ * Supported JWS `alg` Algorithm identifiers.
+ *
+ * @example CryptoKey algorithm for the ES384 JWS Algorithm Identifier
+ *
+ * ```ts
+ * interface ES384Algorithm extends EcKeyAlgorithm {
+ *   name: 'ECDSA'
+ *   namedCurve: 'P-384'
+ * }
+ * ```
+  * Supported JWS `alg` Algorithm identifiers.
+ *
+ * @example CryptoKey algorithm for the ES512 JWS Algorithm Identifier
+ *
+ * ```ts
+ * interface ES512Algorithm extends EcKeyAlgorithm {
+ *   name: 'ECDSA'
+ *   namedCurve: 'P-521'
  * }
  * ```
  *
@@ -142,7 +237,8 @@ function b64u(input: Uint8Array | ArrayBuffer) {
  * }
  * ```
  */
-export type JWSAlgorithm = 'ES256' | 'Ed25519' | 'RS256' | 'PS256'
+export type JWSAlgorithm = ESJWSAlgorithm | 'Ed25519' | 'RS256' | 'PS256'
+
 
 class UnsupportedOperationError extends Error {
   constructor(message?: string) {
@@ -190,11 +286,32 @@ function rsAlg(key: CryptoKey): JWSAlgorithm {
  * Determines an ECDSA algorithm identifier from CryptoKey instance properties.
  */
 function esAlg(key: CryptoKey): JWSAlgorithm {
-  switch ((<EcKeyAlgorithm>key.algorithm).namedCurve) {
+  const namedCurve = (<EcKeyAlgorithm>key.algorithm).namedCurve;
+  switch (namedCurve) {
     case 'P-256':
       return 'ES256'
+    case 'P-384':
+      return 'ES384'
+    case 'P-521':
+      return 'ES512'
     default:
-      throw new UnsupportedOperationError('unsupported EcKeyAlgorithm namedCurve')
+      throw new UnsupportedOperationError(`unsupported EcKeyAlgorithm namedCurve: ${namedCurve}`)
+  }
+}
+
+/**
+ * Determines the hash algorithm identifier from the ECDSA algorithm identifier
+ */
+function esHash(esAlg: ESJWSAlgorithm): ESHashAlgorithm {
+  switch (esAlg) {
+    case 'ES256':
+      return 'SHA-256'
+    case 'ES384':
+      return 'SHA-384'
+    case 'ES512':
+      return 'SHA-512'
+    default:
+      throw new UnsupportedOperationError(`unsupported EcKeyAlgorithm identifier: ${esAlg}`)
   }
 }
 
@@ -266,6 +383,11 @@ export interface KeyPair extends CryptoKeyPair {
  * @param nonce Server-provided nonce.
  * @param accessToken Access token's value (When making protected resource requests).
  * @param additional Any additional claims.
+ * @param issuedAt A optional epoch timestamp to add them to the dpop as iat. If not set DateTime.now() will be used
+ * @param keyId A optional kid to add them to the jwk. If not set claim will not be added
+ *
+ * @remarks
+ *  To set the expiry date using an exp claim, please use the additional parameter and set the exp to the desired epoch timestamp
  */
 export async function generateProof(
   keypair: KeyPair,
@@ -274,6 +396,8 @@ export async function generateProof(
   nonce?: string,
   accessToken?: string,
   additional?: Record<string, JsonValue>,
+  issuedAt?: number,
+  keyId?: string,
 ): Promise<string> {
   const privateKey = keypair?.privateKey
   const publicKey = keypair?.publicKey
@@ -313,15 +437,17 @@ export async function generateProof(
     throw new TypeError('"additional" must be an object')
   }
 
+  const iat = issuedAt ?? epochTime();
+
   return jwt(
     {
       alg: determineJWSAlgorithm(privateKey),
       typ: 'dpop+jwt',
-      jwk: await publicJwk(publicKey),
+      jwk: await publicJwk(publicKey, keyId),
     },
     {
       ...additional,
-      iat: epochTime(),
+      iat,
       jti: crypto.randomUUID(),
       htm,
       nonce,
@@ -335,9 +461,9 @@ export async function generateProof(
 /**
  * Exports an asymmetric crypto key as bare JWK
  */
-async function publicJwk(key: CryptoKey) {
-  const { kty, e, n, x, y, crv } = await crypto.subtle.exportKey('jwk', key)
-  return { kty, crv, e, n, x, y }
+async function publicJwk(key: CryptoKey, kid?: string) {
+  const { alg, crv, e, kty, n, x, y } = await crypto.subtle.exportKey('jwk', key);
+  return { alg, crv, e, kid, kty, n, x, y };
 }
 
 export interface GenerateKeyPairOptions {
