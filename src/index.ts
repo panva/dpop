@@ -313,21 +313,22 @@ export async function generateProof(
     throw new TypeError('"additional" must be an object')
   }
 
+  const claimsSet: Record<string, unknown> = Object.assign(Object.create(null), additional, {
+    iat: epochTime(),
+    jti: crypto.randomUUID(),
+    htm,
+    nonce,
+    htu,
+    ath: accessToken ? b64u(await crypto.subtle.digest('SHA-256', buf(accessToken))) : undefined,
+  })
+
   return jwt(
     {
       alg: determineJWSAlgorithm(privateKey),
       typ: 'dpop+jwt',
       jwk: await publicJwk(publicKey),
     },
-    {
-      ...additional,
-      iat: epochTime(),
-      jti: crypto.randomUUID(),
-      htm,
-      nonce,
-      htu,
-      ath: accessToken ? b64u(await crypto.subtle.digest('SHA-256', buf(accessToken))) : undefined,
-    },
+    claimsSet,
     privateKey,
   )
 }
