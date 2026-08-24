@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.1.2](https://github.com/panva/dpop/compare/v2.1.1...v2.1.2) (2026-08-24)
+
+### Fixes
+
+* preserve special additional claim names ([2ecd37a](https://github.com/panva/dpop/commit/2ecd37a30fca43b7644afc39fb761515d3a5a798))
+
 ## [2.1.1](https://github.com/panva/dpop/compare/v2.1.0...v2.1.1) (2025-07-02)
 
 ## [2.1.0](https://github.com/panva/dpop/compare/v2.0.0...v2.1.0) (2025-06-19)
