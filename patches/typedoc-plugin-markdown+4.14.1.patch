@@ -1,3 +1,16 @@
+diff --git a/node_modules/typedoc-plugin-markdown/dist/libs/utils/escape-chars.js b/node_modules/typedoc-plugin-markdown/dist/libs/utils/escape-chars.js
+index c02ca8d..ff31487 100644
+--- a/node_modules/typedoc-plugin-markdown/dist/libs/utils/escape-chars.js
++++ b/node_modules/typedoc-plugin-markdown/dist/libs/utils/escape-chars.js
+@@ -7,7 +7,7 @@ export function escapeChars(str) {
+         .replace(/{/g, '\\{')
+         .replace(/}/g, '\\}')
+         .replace(/_/g, '\\_')
+-        .replace(/`/g, '\\`')
++        // .replace(/`/g, '\\`')
+         .replace(/\|/g, '\\|')
+         .replace(/\[/g, '\\[')
+         .replace(/\]/g, '\\]')
 diff --git a/node_modules/typedoc-plugin-markdown/dist/theme/context/helpers/get-project-name.js b/node_modules/typedoc-plugin-markdown/dist/theme/context/helpers/get-project-name.js
 index 5419db0..7986e91 100644
 --- a/node_modules/typedoc-plugin-markdown/dist/theme/context/helpers/get-project-name.js
