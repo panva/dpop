@@ -6,4 +6,4 @@ Support from the community to continue maintaining and improving this module is 
 
 ***
 
-• **JsonArray**: [`JsonValue`](JsonValue.md)[]
+• **JsonArray** = [`JsonValue`](JsonValue.md)[]

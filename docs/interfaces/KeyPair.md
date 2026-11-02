@@ -14,7 +14,7 @@ Support from the community to continue maintaining and improving this module is 
 
 Private CryptoKey instance to sign the DPoP Proof JWT with.
 
-Its algorithm must be compatible with a supported [JWS `alg` Algorithm](../type-aliases/JWSAlgorithm.md).
+Its algorithm must be compatible with a supported [JWS \`alg\` Algorithm](../type-aliases/JWSAlgorithm.md).
 
 ***
 
@@ -22,4 +22,4 @@ Its algorithm must be compatible with a supported [JWS `alg` Algorithm](../type-
 
 • **publicKey**: [`CryptoKey`](https://developer.mozilla.org/docs/Web/API/CryptoKey)
 
-The public CryptoKey instance corresponding to [KeyPair.privateKey](KeyPair.md#privatekey)
+The public CryptoKey instance corresponding to [KeyPair.privateKey](#privatekey)

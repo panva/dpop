@@ -6,7 +6,7 @@ Support from the community to continue maintaining and improving this module is 
 
 ***
 
-▸ **generateKeyPair**(`alg`, `options`?): [`Promise`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<[`KeyPair`](../interfaces/KeyPair.md)\>
+▸ **generateKeyPair**(`alg`, `options?`): [`Promise`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<[`KeyPair`](../interfaces/KeyPair.md)\>
 
 Generates a [KeyPair](../interfaces/KeyPair.md) for a given JWS `alg` Algorithm identifier.
 
@@ -15,7 +15,7 @@ Generates a [KeyPair](../interfaces/KeyPair.md) for a given JWS `alg` Algorithm 
 | Parameter | Type | Description |
 | ------ | ------ | ------ |
 | `alg` | [`JWSAlgorithm`](../type-aliases/JWSAlgorithm.md) | Supported JWS `alg` Algorithm identifier. |
-| `options`? | [`GenerateKeyPairOptions`](../interfaces/GenerateKeyPairOptions.md) | - |
+| `options?` | [`GenerateKeyPairOptions`](../interfaces/GenerateKeyPairOptions.md) | - |
 
 ## Returns
 

@@ -6,6 +6,7 @@
     "module": "ES2022",
     "strict": true,
     "removeComments": true,
+    "rootDir": "src",
     "outDir": "build",
     "noUnusedLocals": true,
     "noUnusedParameters": true,

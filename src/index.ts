@@ -14,9 +14,9 @@ export type CryptoKey = Extract<
 const encoder = new TextEncoder()
 const decoder = new TextDecoder()
 
-function buf(input: string): Uint8Array
+function buf(input: string): Uint8Array<ArrayBuffer>
 function buf(input: Uint8Array): string
-function buf(input: string | Uint8Array) {
+function buf(input: string | Uint8Array): string | Uint8Array<ArrayBuffer> {
   if (typeof input === 'string') {
     return encoder.encode(input)
   }

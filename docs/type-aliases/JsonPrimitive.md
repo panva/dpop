@@ -6,4 +6,4 @@ Support from the community to continue maintaining and improving this module is 
 
 ***
 
-• **JsonPrimitive**: `string` \| `number` \| `boolean` \| `null`
+• **JsonPrimitive** = `string` \| `number` \| `boolean` \| `null`

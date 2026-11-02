@@ -6,11 +6,13 @@ Support from the community to continue maintaining and improving this module is 
 
 ***
 
-• **JWSAlgorithm**: `"ES256"` \| `"Ed25519"` \| `"RS256"` \| `"PS256"`
+• **JWSAlgorithm** = `"ES256"` \| `"Ed25519"` \| `"RS256"` \| `"PS256"`
 
 Supported JWS `alg` Algorithm identifiers.
 
 ## Examples
+
+**CryptoKey algorithm for the ES256 JWS Algorithm Identifier**
 
 ```ts
 interface ES256Algorithm extends EcKeyAlgorithm {
@@ -19,11 +21,15 @@ interface ES256Algorithm extends EcKeyAlgorithm {
 }
 ```
 
+**CryptoKey algorithm for the Ed25519 JWS Algorithm Identifier**
+
 ```ts
 interface Ed25519Algorithm extends Algorithm {
   name: 'Ed25519'
 }
 ```
+
+**CryptoKey algorithm for the PS256 JWS Algorithm Identifier**
 
 ```ts
 interface PS256Algorithm extends RsaHashedKeyAlgorithm {
@@ -31,6 +37,8 @@ interface PS256Algorithm extends RsaHashedKeyAlgorithm {
   hash: { name: 'SHA-256' }
 }
 ```
+
+**CryptoKey algorithm for the RS256 JWS Algorithm Identifier**
 
 ```ts
 interface RS56Algorithm extends RsaHashedKeyAlgorithm {

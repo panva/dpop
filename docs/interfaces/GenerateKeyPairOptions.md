@@ -10,6 +10,6 @@ Support from the community to continue maintaining and improving this module is 
 
 ### extractable?
 
-• `optional` **extractable**: `boolean`
+• `optional` **extractable?**: `boolean`
 
 Indicates whether or not the private key may be exported. Default is `false`.
